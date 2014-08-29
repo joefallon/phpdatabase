@@ -1,0 +1,253 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "8a4ec3cf5ac80b9b2b84b89359db6a5c",
+    "packages": [
+        {
+            "name": "joefallon/phplog",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/joefallon/phplog.git",
+                "reference": "09c25a5acab7128acd66b244ec61460d59518647"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/joefallon/phplog/zipball/09c25a5acab7128acd66b244ec61460d59518647",
+                "reference": "09c25a5acab7128acd66b244ec61460d59518647",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "psr/log": "~1.0"
+            },
+            "require-dev": {
+                "joefallon/kisstest": "~1.0",
+                "joefallon/phpautoloader": "~1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "JoeFallon": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Joe Fallon",
+                    "email": "joseph.t.fallon@gmail.com",
+                    "homepage": "http://blog.joefallon.net"
+                }
+            ],
+            "description": "This package contains simple to use logger",
+            "homepage": "https://github.com/joefallon/phplog",
+            "keywords": [
+                "database",
+                "dbal",
+                "php"
+            ],
+            "time": "2014-08-29 17:07:45"
+        },
+        {
+            "name": "joefallon/phptime",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/joefallon/phptime.git",
+                "reference": "4d8bf67fc4b3c21d99c7b7a75485dccb169dbc97"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/joefallon/phptime/zipball/4d8bf67fc4b3c21d99c7b7a75485dccb169dbc97",
+                "reference": "4d8bf67fc4b3c21d99c7b7a75485dccb169dbc97",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "joefallon/kisstest": "~1.0",
+                "joefallon/phpautoloader": "~1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "JoeFallon": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Joe Fallon",
+                    "email": "joseph.t.fallon@gmail.com",
+                    "homepage": "http://blog.joefallon.net"
+                }
+            ],
+            "description": "This package contains a set of classes for making it easier to work with time in PHP.",
+            "homepage": "https://github.com/joefallon/phptime",
+            "keywords": [
+                "chronograph",
+                "data",
+                "php",
+                "time"
+            ],
+            "time": "2014-08-29 17:00:09"
+        },
+        {
+            "name": "psr/log",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/log.git",
+                "reference": "a78d6504ff5d4367497785ab2ade91db3a9fbe11"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/a78d6504ff5d4367497785ab2ade91db3a9fbe11",
+                "reference": "a78d6504ff5d4367497785ab2ade91db3a9fbe11",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Psr\\Log\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for logging libraries",
+            "keywords": [
+                "log",
+                "psr",
+                "psr-3"
+            ],
+            "time": "2014-01-18 15:33:09"
+        }
+    ],
+    "packages-dev": [
+        {
+            "name": "joefallon/kisstest",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/joefallon/kisstest.git",
+                "reference": "91c6fed94cce53d3f407fb5fb33546f7c117d4bf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/joefallon/kisstest/zipball/91c6fed94cce53d3f407fb5fb33546f7c117d4bf",
+                "reference": "91c6fed94cce53d3f407fb5fb33546f7c117d4bf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "joefallon/phpautoloader": "~1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "JoeFallon": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Joe Fallon",
+                    "email": "joseph.t.fallon@gmail.com",
+                    "homepage": "http://blog.joefallon.net"
+                }
+            ],
+            "description": "KissTest is a gorgeous and fast unit testing framework for PHP that does not require use of the command line.",
+            "homepage": "https://github.com/joefallon/kisstest",
+            "keywords": [
+                "test",
+                "unit-test",
+                "xunit"
+            ],
+            "time": "2014-08-29 16:18:15"
+        },
+        {
+            "name": "joefallon/phpautoloader",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/joefallon/phpautoloader.git",
+                "reference": "ae8141fdd0c696ea2c6301c5d4100102135014b4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/joefallon/phpautoloader/zipball/ae8141fdd0c696ea2c6301c5d4100102135014b4",
+                "reference": "ae8141fdd0c696ea2c6301c5d4100102135014b4",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "JoeFallon": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Joe Fallon",
+                    "email": "joseph.t.fallon@gmail.com",
+                    "homepage": "http://blog.joefallon.net/",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "Joe's simple to use and versatile PHP autoloader.",
+            "homepage": "https://github.com/joefallon/phpautoloader",
+            "keywords": [
+                "Simple",
+                "autoloader",
+                "namespace",
+                "psr-0"
+            ],
+            "time": "2014-08-29 16:15:59"
+        }
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "dev",
+    "stability-flags": [
+
+    ],
+    "prefer-stable": false,
+    "platform": {
+        "php": ">=5.3.0"
+    },
+    "platform-dev": [
+
+    ]
+}

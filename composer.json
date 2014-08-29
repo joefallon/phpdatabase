@@ -1,0 +1,33 @@
+{
+    "name": "joefallon/phpdatabase",
+    "type": "library",
+    "description": "This package contains simple to use database access layer that eschews the ORM mentality.",
+    "keywords": [ "PHP", "dbal", "database" ],
+    "homepage": "https://github.com/joefallon/phpdatabase",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Joe Fallon",
+            "email": "joseph.t.fallon@gmail.com",
+            "homepage": "http://blog.joefallon.net"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "joefallon/phplog":      "~1.0",
+        "joefallon/phptime":     "~1.0",
+        "psr/log":               "~1.0"
+    },
+    "require-dev": {
+        "joefallon/phpautoloader": "~1.0",
+        "joefallon/kisstest":      "~1.0"
+
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0":
+        {
+            "JoeFallon": "src/"
+        }
+    }
+}
