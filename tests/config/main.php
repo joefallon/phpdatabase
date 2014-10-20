@@ -1,5 +1,5 @@
 <?php
-use JoeFallon\Autoloader;
+use JoeFallon\AutoLoader;
 use JoeFallon\Database\PdoFactory;
 
 
@@ -12,8 +12,7 @@ define('VEND_PATH', BASE_PATH.'/vendor');
 set_include_path(get_include_path().':'.SRC_PATH.':'.BASE_PATH);
 
 require(VEND_PATH.'/autoload.php');
-
-Autoloader::registerAutoLoad();
+AutoLoader::registerAutoLoad();
 
 define('DB_HOST', 'localhost');
 define('DB_PORT', '3306');

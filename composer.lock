@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8a4ec3cf5ac80b9b2b84b89359db6a5c",
+    "hash": "bc5c05fabba4d3c2a21361813dc7c5ee",
     "packages": [
         {
             "name": "joefallon/phplog",
@@ -56,16 +56,16 @@
         },
         {
             "name": "joefallon/phptime",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joefallon/phptime.git",
-                "reference": "4d8bf67fc4b3c21d99c7b7a75485dccb169dbc97"
+                "reference": "715375f41b66da96ca6d9f5a45fb6d23d57f0cf3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joefallon/phptime/zipball/4d8bf67fc4b3c21d99c7b7a75485dccb169dbc97",
-                "reference": "4d8bf67fc4b3c21d99c7b7a75485dccb169dbc97",
+                "url": "https://api.github.com/repos/joefallon/phptime/zipball/715375f41b66da96ca6d9f5a45fb6d23d57f0cf3",
+                "reference": "715375f41b66da96ca6d9f5a45fb6d23d57f0cf3",
                 "shasum": ""
             },
             "require": {
@@ -73,7 +73,7 @@
             },
             "require-dev": {
                 "joefallon/kisstest": "~1.0",
-                "joefallon/phpautoloader": "~1.0"
+                "joefallon/phpautoloader": "~2.0"
             },
             "type": "library",
             "autoload": {
@@ -100,7 +100,7 @@
                 "php",
                 "time"
             ],
-            "time": "2014-08-29 17:00:09"
+            "time": "2014-10-20 16:33:21"
         },
         {
             "name": "psr/log",
@@ -149,23 +149,23 @@
     "packages-dev": [
         {
             "name": "joefallon/kisstest",
-            "version": "v1.1.2",
+            "version": "v1.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joefallon/kisstest.git",
-                "reference": "91c6fed94cce53d3f407fb5fb33546f7c117d4bf"
+                "reference": "a5e19de2b350252be3c3bd3f3c5dab29d19ec524"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joefallon/kisstest/zipball/91c6fed94cce53d3f407fb5fb33546f7c117d4bf",
-                "reference": "91c6fed94cce53d3f407fb5fb33546f7c117d4bf",
+                "url": "https://api.github.com/repos/joefallon/kisstest/zipball/a5e19de2b350252be3c3bd3f3c5dab29d19ec524",
+                "reference": "a5e19de2b350252be3c3bd3f3c5dab29d19ec524",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
             "require-dev": {
-                "joefallon/phpautoloader": "~1.0"
+                "joefallon/phpautoloader": "~2.0"
             },
             "type": "library",
             "autoload": {
@@ -191,20 +191,20 @@
                 "unit-test",
                 "xunit"
             ],
-            "time": "2014-08-29 16:18:15"
+            "time": "2014-10-20 15:04:14"
         },
         {
             "name": "joefallon/phpautoloader",
-            "version": "v1.0.3",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joefallon/phpautoloader.git",
-                "reference": "ae8141fdd0c696ea2c6301c5d4100102135014b4"
+                "reference": "bae8db9f3327d44f8231f6ac414d00f9511f1dc4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joefallon/phpautoloader/zipball/ae8141fdd0c696ea2c6301c5d4100102135014b4",
-                "reference": "ae8141fdd0c696ea2c6301c5d4100102135014b4",
+                "url": "https://api.github.com/repos/joefallon/phpautoloader/zipball/bae8db9f3327d44f8231f6ac414d00f9511f1dc4",
+                "reference": "bae8db9f3327d44f8231f6ac414d00f9511f1dc4",
                 "shasum": ""
             },
             "type": "library",
@@ -233,21 +233,15 @@
                 "namespace",
                 "psr-0"
             ],
-            "time": "2014-08-29 16:15:59"
+            "time": "2014-10-20 14:58:35"
         }
     ],
-    "aliases": [
-
-    ],
+    "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [
-
-    ],
+    "stability-flags": [],
     "prefer-stable": false,
     "platform": {
         "php": ">=5.3.0"
     },
-    "platform-dev": [
-
-    ]
+    "platform-dev": []
 }

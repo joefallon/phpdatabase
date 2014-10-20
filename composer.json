@@ -19,7 +19,7 @@
         "psr/log":               "~1.0"
     },
     "require-dev": {
-        "joefallon/phpautoloader": "~1.0",
+        "joefallon/phpautoloader": "~2.0",
         "joefallon/kisstest":      "~1.0"
 
     },
