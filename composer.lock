@@ -4,20 +4,20 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bc5c05fabba4d3c2a21361813dc7c5ee",
+    "hash": "d3dfd90c014ba73531db7f40cf5edac4",
     "packages": [
         {
             "name": "joefallon/phplog",
-            "version": "v1.0.3",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joefallon/phplog.git",
-                "reference": "09c25a5acab7128acd66b244ec61460d59518647"
+                "reference": "591ab23524755089da2c4df2717c74a915be1d7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joefallon/phplog/zipball/09c25a5acab7128acd66b244ec61460d59518647",
-                "reference": "09c25a5acab7128acd66b244ec61460d59518647",
+                "url": "https://api.github.com/repos/joefallon/phplog/zipball/591ab23524755089da2c4df2717c74a915be1d7a",
+                "reference": "591ab23524755089da2c4df2717c74a915be1d7a",
                 "shasum": ""
             },
             "require": {
@@ -26,7 +26,7 @@
             },
             "require-dev": {
                 "joefallon/kisstest": "~1.0",
-                "joefallon/phpautoloader": "~1.0"
+                "joefallon/phpautoloader": "~2.0"
             },
             "type": "library",
             "autoload": {
@@ -52,7 +52,7 @@
                 "dbal",
                 "php"
             ],
-            "time": "2014-08-29 17:07:45"
+            "time": "2014-10-20 15:30:58"
         },
         {
             "name": "joefallon/phptime",
