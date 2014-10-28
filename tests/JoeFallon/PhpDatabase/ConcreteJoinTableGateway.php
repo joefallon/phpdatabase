@@ -1,8 +1,8 @@
 <?php
-namespace tests\JoeFallon\Database;
+namespace tests\JoeFallon\PhpDatabase;
 
-use JoeFallon\Database\AbstractJoinTableGateway;
-use JoeFallon\Time\Chronograph;
+use JoeFallon\PhpDatabase\AbstractJoinTableGateway;
+use JoeFallon\PhpTime\Chronograph;
 use PDO;
 use Psr\Log\LoggerInterface;
 

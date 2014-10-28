@@ -1,9 +1,9 @@
 <?php
-namespace JoeFallon\Database;
+namespace JoeFallon\PhpDatabase;
 
 
 use InvalidArgumentException;
-use JoeFallon\Time\Chronograph;
+use JoeFallon\PhpTime\Chronograph;
 use PDO;
 use Psr\Log\LoggerInterface;
 use stdClass;

@@ -4,20 +4,20 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d3dfd90c014ba73531db7f40cf5edac4",
+    "hash": "c8e328781ddcb0f6e175bedd06d0ff00",
     "packages": [
         {
             "name": "joefallon/phplog",
-            "version": "v2.0.0",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joefallon/phplog.git",
-                "reference": "591ab23524755089da2c4df2717c74a915be1d7a"
+                "reference": "a73c5db6ee7fd224c704d0bd05ac5dd8ea92fcf4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joefallon/phplog/zipball/591ab23524755089da2c4df2717c74a915be1d7a",
-                "reference": "591ab23524755089da2c4df2717c74a915be1d7a",
+                "url": "https://api.github.com/repos/joefallon/phplog/zipball/a73c5db6ee7fd224c704d0bd05ac5dd8ea92fcf4",
+                "reference": "a73c5db6ee7fd224c704d0bd05ac5dd8ea92fcf4",
                 "shasum": ""
             },
             "require": {
@@ -52,20 +52,20 @@
                 "dbal",
                 "php"
             ],
-            "time": "2014-10-20 15:30:58"
+            "time": "2014-10-28 22:58:43"
         },
         {
             "name": "joefallon/phptime",
-            "version": "v1.0.1",
+            "version": "v3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joefallon/phptime.git",
-                "reference": "715375f41b66da96ca6d9f5a45fb6d23d57f0cf3"
+                "reference": "10de3018b6d084b82a3984b2f5b85d1d34daa017"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joefallon/phptime/zipball/715375f41b66da96ca6d9f5a45fb6d23d57f0cf3",
-                "reference": "715375f41b66da96ca6d9f5a45fb6d23d57f0cf3",
+                "url": "https://api.github.com/repos/joefallon/phptime/zipball/10de3018b6d084b82a3984b2f5b85d1d34daa017",
+                "reference": "10de3018b6d084b82a3984b2f5b85d1d34daa017",
                 "shasum": ""
             },
             "require": {
@@ -100,7 +100,7 @@
                 "php",
                 "time"
             ],
-            "time": "2014-10-20 16:33:21"
+            "time": "2014-10-28 23:03:50"
         },
         {
             "name": "psr/log",
@@ -149,16 +149,16 @@
     "packages-dev": [
         {
             "name": "joefallon/kisstest",
-            "version": "v1.1.6",
+            "version": "v1.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joefallon/kisstest.git",
-                "reference": "a5e19de2b350252be3c3bd3f3c5dab29d19ec524"
+                "reference": "14c99dfe9fe10e44406cba000f4c7b6066d13014"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joefallon/kisstest/zipball/a5e19de2b350252be3c3bd3f3c5dab29d19ec524",
-                "reference": "a5e19de2b350252be3c3bd3f3c5dab29d19ec524",
+                "url": "https://api.github.com/repos/joefallon/kisstest/zipball/14c99dfe9fe10e44406cba000f4c7b6066d13014",
+                "reference": "14c99dfe9fe10e44406cba000f4c7b6066d13014",
                 "shasum": ""
             },
             "require": {
@@ -191,7 +191,7 @@
                 "unit-test",
                 "xunit"
             ],
-            "time": "2014-10-20 15:04:14"
+            "time": "2014-10-22 20:47:37"
         },
         {
             "name": "joefallon/phpautoloader",

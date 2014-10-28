@@ -1,11 +1,11 @@
 <?php
-namespace tests\JoeFallon\Database;
+namespace tests\JoeFallon\PhpDatabase;
 
 
 use InvalidArgumentException;
 use JoeFallon\KissTest\UnitTest;
-use JoeFallon\Log\Log;
-use JoeFallon\Time\Chronograph;
+use JoeFallon\PhpLog\Log;
+use JoeFallon\PhpTime\Chronograph;
 
 use PDO;
 

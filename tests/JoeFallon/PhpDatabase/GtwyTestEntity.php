@@ -1,7 +1,7 @@
 <?php
-namespace tests\JoeFallon\Database;
+namespace tests\JoeFallon\PhpDatabase;
 
-use JoeFallon\Database\AbstractEntity;
+use JoeFallon\PhpDatabase\AbstractEntity;
 
 /**
  * @author    Joseph Fallon <joseph.t.fallon@gmail.com>

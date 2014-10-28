@@ -1,9 +1,9 @@
 <?php
-namespace JoeFallon\Database;
+namespace JoeFallon\PhpDatabase;
 
 use Exception;
-use JoeFallon\Time\Chronograph;
-use JoeFallon\Time\MySqlDateTime;
+use JoeFallon\PhpTime\Chronograph;
+use JoeFallon\PhpTime\MySqlDateTime;
 use PDO;
 use Psr\Log\LoggerInterface;
 

@@ -1,5 +1,5 @@
 <?php
-namespace JoeFallon\Database;
+namespace JoeFallon\PhpDatabase;
 
 /**
  * @author    Joseph Fallon <joseph.t.fallon@gmail.com>

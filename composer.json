@@ -14,8 +14,8 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "joefallon/phplog":      "~2.0",
-        "joefallon/phptime":     "~1.0",
+        "joefallon/phplog":      "~3.0",
+        "joefallon/phptime":     "~3.0",
         "psr/log":               "~1.0"
     },
     "require-dev": {
