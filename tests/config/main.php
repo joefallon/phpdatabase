@@ -1,6 +1,6 @@
 <?php
 use JoeFallon\AutoLoader;
-use JoeFallon\Database\PdoFactory;
+use JoeFallon\PhpDatabase\PdoFactory;
 
 
 // Define the include paths.
