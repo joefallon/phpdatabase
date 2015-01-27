@@ -27,7 +27,7 @@ and run the `php composer.phar install` command to install it.
 *   An entity is a class that represents a single row within a database.
 *   All entities are subclasses of `AbstractEntity`.
 *   All abstract entities contain the following data fields:
-    #   `id` - This is the primary key of the row.
-    #   `created` - This is the date and time that the row was created.
-    #   `updated` - This is the date and time that the row was last updated.
+    1.  `id` - This is the primary key of the row.
+    2.  `created` - This is the date and time that the row was created.
+    3.  `updated` - This is the date and time that the row was last updated.
     
