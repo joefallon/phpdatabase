@@ -1,7 +1,6 @@
 <?php
 namespace JoeFallon\PhpDatabase;
 
-
 use InvalidArgumentException;
 use JoeFallon\PhpTime\Chronograph;
 use PDO;
@@ -26,16 +25,12 @@ abstract class AbstractTableGateway
 
 
     /**
-     * __construct
-     *
-     * @param PDO             $db 
+     * @param PDO $db
      * @param string          $tableName Name of the table.
      * @param Chronograph     $timer     This is used for metrics.
      * @param LoggerInterface $logger    This is used for logging.
      */
-    protected function __construct(PDO $db,
-                                   $tableName,
-                                   Chronograph $timer = null,
+    protected function __construct(PDO $db, $tableName, Chronograph $timer = null,
                                    LoggerInterface $logger = null)
     {
         $this->_db        = $db;
@@ -44,10 +39,24 @@ abstract class AbstractTableGateway
         $this->_logger    = $logger;
     }
 
+    /**
+     * @param mixed $object
+     *
+     * @return array
+     */
+    protected abstract function convertObjectToArray($object);
 
     /**
-     * baseCreate - This function inserts the data, updates the id, created and
-     * updated timestamps, and returns the inserted id on sucess zero on failure.
+     * @param array $array
+     *
+     * @return mixed
+     */
+    protected abstract function convertArrayToObject($array);
+
+    /**
+     * This function inserts the data, updates the id, created and
+     * updated timestamps, and returns the inserted id on success
+     * zero on failure.
      *
      * @param AbstractEntity $entity
      *
@@ -95,143 +104,14 @@ abstract class AbstractTableGateway
         return $insertedId;
     }
 
-
     /**
-     * Start the timer.
-     */
-    protected function startTimer()
-    {
-        if($this->_timer != null)
-        {
-            $this->_timer->start();
-        }
-    }
-
-
-    /**
-     * convertObjectToArray
-     *
-     * @param stdClass $object
-     */
-    protected abstract function convertObjectToArray($object);
-
-
-    /**
-     * getColumnNames
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    protected function getColumnNames($data)
-    {
-        $colNames = array();
-
-        foreach($data as $key => $value)
-        {
-            $colNames[] = $key;
-        }
-
-        return $colNames;
-    }
-
-
-    /**
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    protected function getBindParameterNames($data)
-    {
-        $bindParamNames = array();
-
-        foreach($data as $key => $value)
-        {
-            $bindParamNames[] = ':' . $key;
-        }
-
-        return $bindParamNames;
-    }
-
-
-    /**
-     * convertToBindParamArray
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    protected function convertToBindParamArray($data)
-    {
-        $bindParams = array();
-
-        foreach($data as $key => $value)
-        {
-            $bindParams[':' . $key] = $value;
-        }
-
-        return $bindParams;
-    }
-
-
-    /**
-     * Sop the timer.
-     */
-    protected function stopTimer()
-    {
-        if($this->_timer != null)
-        {
-            $this->_timer->stop();
-        }
-    }
-
-
-    /**
-     * @param string $sql
-     * @param int    $affectedRowsCount
-     * @param null   $insertId
-     * @param null   $data
-     */
-    protected function logDatabaseAction($sql,
-                                         $affectedRowsCount,
-                                         $insertId = null,
-                                         $data = null)
-    {
-        $logger = $this->_logger;
-        if($logger == null)
-        {
-            return;
-        }
-
-        $t = $this->_timer->getElapsedTimeInMillisecs() . 'mS';
-
-        $logger->info('----------');
-        $logger->info(get_class($this));
-        $logger->info('sql = ' . $sql);
-        $logger->info('Rows Affected = ' . $affectedRowsCount);
-        $logger->info('Execution Time = ' . $t);
-
-        if($insertId > 0)
-        {
-            $logger->info('Insert Id = ' . $insertId);
-        }
-
-        if($data != null)
-        {
-            $logger->info('data = ' . print_r($data, true));
-        }
-    }
-
-
-    /**
-     * baseRetrieve - This function retrieves the object from the database
+     * This function retrieves the object from the database
      * specified by the $id. This method assumes the primary key of the
      * table is named `id`.
      *
      * @param integer $id Id of the object to return.
      *
-     * @return mixed      The retrieved row, converted to an object.
+     * @return mixed  The retrieved row, converted to an object.
      */
     protected function baseRetrieve($id)
     {
@@ -265,18 +145,8 @@ abstract class AbstractTableGateway
 
 
     /**
-     * convertArrayToObject
-     *
-     * @param mixed $array
-     */
-    protected abstract function convertArrayToObject($array);
-
-
-    /**
-     * baseRetrieveBy
-     *
      * @param string $fieldName
-     * @param string $fieldValue
+     * @param mixed  $fieldValue
      *
      * @return array
      */
@@ -311,8 +181,6 @@ abstract class AbstractTableGateway
 
 
     /**
-     * baseRetrieveByIds
-     *
      * @param array $ids
      *
      * @return array
@@ -355,10 +223,7 @@ abstract class AbstractTableGateway
         return $results;
     }
 
-
     /**
-     * baseRetrieveByIsNull
-     *
      * @param string $fieldName
      *
      * @return array
@@ -391,12 +256,9 @@ abstract class AbstractTableGateway
         return $results;
     }
 
-
     /**
-     * baseRetrieveByNotEqual
-     *
      * @param string $fieldName
-     * @param string $fieldValue
+     * @param mixed  $fieldValue
      *
      * @return array
      */
@@ -430,7 +292,6 @@ abstract class AbstractTableGateway
         return $results;
     }
 
-
     /**
      * @param AbstractEntity $entity
      *
@@ -440,8 +301,6 @@ abstract class AbstractTableGateway
     {
         $db        = $this->_db;
         $tableName = $this->_tableName;
-        $timer     = $this->_timer;
-        $logger    = $this->_logger;
 
         $this->startTimer();
 
@@ -489,8 +348,6 @@ abstract class AbstractTableGateway
 
 
     /**
-     * baseSetFieldNull
-     *
      * @param string $fieldName
      * @param mixed  $fieldValue
      *
@@ -522,10 +379,7 @@ abstract class AbstractTableGateway
         return $rowsAffected;
     }
 
-
     /**
-     * baseDelete
-     *
      * @param int $id
      *
      * @return int Rows affected
@@ -553,12 +407,9 @@ abstract class AbstractTableGateway
 
     }
 
-
     /**
-     * baseDeleteBy
-     *
      * @param string $fieldName
-     * @param string $fieldValue
+     * @param mixed  $fieldValue
      *
      * @return int
      */
@@ -586,7 +437,12 @@ abstract class AbstractTableGateway
         return $rowsAffected;
     }
 
-
+    /**
+     * @param string $fieldName
+     * @param mixed  $fieldValue
+     *
+     * @return int
+     */
     protected function baseCountBy($fieldName, $fieldValue)
     {
         $fn      = strval($fieldName);
@@ -619,5 +475,106 @@ abstract class AbstractTableGateway
         }
 
         return 0;
+    }
+
+    protected function startTimer()
+    {
+        if($this->_timer != null)
+        {
+            $this->_timer->start();
+        }
+    }
+
+    protected function stopTimer()
+    {
+        if($this->_timer != null)
+        {
+            $this->_timer->stop();
+        }
+    }
+
+    /**
+     * @param string $sql
+     * @param int    $affectedRowsCount
+     * @param null   $insertId
+     * @param null   $data
+     */
+    protected function logDatabaseAction($sql, $affectedRowsCount, $insertId = null,
+                                         $data = null)
+    {
+        $logger = $this->_logger;
+        if($logger == null)
+        {
+            return;
+        }
+
+        $t = $this->_timer->getElapsedTimeInMillisecs() . 'mS';
+
+        $logger->info('----------');
+        $logger->info(get_class($this));
+        $logger->info('sql = ' . $sql);
+        $logger->info('Rows Affected = ' . $affectedRowsCount);
+        $logger->info('Execution Time = ' . $t);
+
+        if($insertId > 0)
+        {
+            $logger->info('Insert Id = ' . $insertId);
+        }
+
+        if($data != null)
+        {
+            $logger->info('data = ' . print_r($data, true));
+        }
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function getColumnNames($data)
+    {
+        $colNames = array();
+
+        foreach($data as $key => $value)
+        {
+            $colNames[] = $key;
+        }
+
+        return $colNames;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function getBindParameterNames($data)
+    {
+        $bindParamNames = array();
+
+        foreach($data as $key => $value)
+        {
+            $bindParamNames[] = ':' . $key;
+        }
+
+        return $bindParamNames;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function convertToBindParamArray($data)
+    {
+        $bindParams = array();
+
+        foreach($data as $key => $value)
+        {
+            $bindParams[':' . $key] = $value;
+        }
+
+        return $bindParams;
     }
 }
