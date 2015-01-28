@@ -32,3 +32,21 @@ data fields:
 *   `created` - This is the date and time that the row was created.
 *   `updated` - This is the date and time that the row was last updated.
     
+Additional data fields are added to `AbstractEntity`. Each data field that is 
+added to `AbstractEntity` and should correlate one-to-one with columns within a 
+given table. 
+
+In addition to the data fields, each subclass of `AbstractEntity` also
+contains the `isValid` valid. The `isValid` method returns true when the entity is
+considered valid and can be stored within the database. When an entity is considered
+invlid, the entity should store messages within the entity. The messages are
+retrieved using the `getValidationMessages` method. The messages should be written
+in a way as to be usable for possible display to the user.
+
+### Abstract Table Gateway
+
+#### Fourth Level Item
+
+### Abstract Join-Table Gateway
+
+### PDO Factory
