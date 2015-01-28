@@ -23,6 +23,14 @@ and run the `php composer.phar install` command to install it.
 
 ## Usage
 
+There are four main classes are are used to represent all of the relationships
+within a database: 
+
+*   `AbstractEntity`
+*   `AbstractTableGateway`
+*   `AbstractJoinTableGateway`
+*   `PdoFactory`
+
 ### Entities
 
 An entity is a class that represents a single row within a database. All entities 
