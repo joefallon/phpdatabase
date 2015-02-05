@@ -1,5 +1,7 @@
 # phpdatabase
 
+By [Joe Fallon](http://blog.joefallon.net)
+
 A simple library for MySQL database access. It has the following features:
 
 *   Full suite of unit tests.
