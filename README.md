@@ -50,9 +50,8 @@ given table.
 In addition to the data fields, each subclass of `AbstractEntity` also
 contains the `isValid` valid. The `isValid` method returns true when the entity is
 considered valid and can be stored within the database. When an entity is considered
-invlid, the entity should store messages within the entity. The messages are
-retrieved using the `getValidationMessages` method. The messages should be written
-in a way as to be usable for possible display to the user.
+invalid, the entity should store messages within the entity. It is best if the messages
+are written in a way as to be usable for display to the user.
 
 ### Abstract Table Gateway
 
@@ -62,7 +61,7 @@ a table within the database.
 Each subclass must implement the abstract methods
 `convertObjectToArray` and `convertArrayToObject`. The method `convertObjectToArray`
 is used to convert an entity to an associative array. The names of the keys map
-to the culumn names within the database. The method `convertArrayToObject` is
+to the column names within the database. The method `convertArrayToObject` is
 used to convert an associative array that was retrieved from the database into
 an object.
 

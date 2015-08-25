@@ -104,31 +104,4 @@ abstract class AbstractEntity
      * @return bool
      */
     public abstract function isValid();
-    
-    
-    /**
-     * getValidationMessages
-     * 
-     * @return array
-     */
-    public function getValidationMessages()
-    {
-        return $this->_validationMessages;
-    }
-    
-    
-    /**
-     * addValidationMessage
-     * 
-     * @param string $msg
-     */
-    protected function addValidationMessage($msg)
-    {
-        $msg = strval($msg);
-        
-        if(strlen($msg) > 0)
-        {
-            $this->_validationMessages[] = $msg;
-        }
-    }
 }
