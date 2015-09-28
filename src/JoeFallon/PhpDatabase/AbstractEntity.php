@@ -14,9 +14,6 @@ abstract class AbstractEntity
     private $_created;
     /** @var string */
     private $_updated;
-    /** @var array */
-    protected $_validationMessages;
-    
     
     /**
      * __construct
