@@ -28,9 +28,8 @@ class AbstractTableGatewayTests extends UnitTest
 
         $path   = realpath(BASE_PATH . '/tests/logs') . '/' . date('Y-m-d') . '.log';
         $logger = new Log($path, Log::DEBUG);
-        $timer  = new Chronograph();
         $tableName = 'gtwy_tests';
-        $gtwy      = new ConcreteTableGateway($pdo, $tableName, $timer, $logger);
+        $gtwy      = new ConcreteTableGateway($pdo, $tableName, $logger);
         
         return $gtwy;
     }

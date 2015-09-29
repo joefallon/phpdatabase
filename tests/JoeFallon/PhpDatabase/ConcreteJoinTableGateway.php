@@ -17,10 +17,9 @@ class ConcreteJoinTableGateway extends AbstractJoinTableGateway
                                 $tableName,
                                 $id1Name,
                                 $id2Name,
-                                Chronograph $timer,
                                 LoggerInterface $logger)
     {
-        parent::__construct($db, $tableName, $id1Name, $id2Name, $timer, $logger);
+        parent::__construct($db, $tableName, $id1Name, $id2Name, $logger);
     }
 
 

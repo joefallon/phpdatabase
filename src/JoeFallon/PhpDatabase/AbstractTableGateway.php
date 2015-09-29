@@ -25,17 +25,15 @@ abstract class AbstractTableGateway
 
 
     /**
-     * @param PDO $db
+     * @param PDO             $db
      * @param string          $tableName Name of the table.
-     * @param Chronograph     $timer     This is used for metrics.
      * @param LoggerInterface $logger    This is used for logging.
      */
-    protected function __construct(PDO $db, $tableName, Chronograph $timer = null,
-                                   LoggerInterface $logger = null)
+    protected function __construct(PDO $db, $tableName, LoggerInterface $logger = null)
     {
         $this->_db        = $db;
         $this->_tableName = $tableName;
-        $this->_timer     = $timer;
+        $this->_timer     = new Chronograph();
         $this->_logger    = $logger;
     }
 
@@ -499,8 +497,10 @@ abstract class AbstractTableGateway
      * @param null   $insertId
      * @param null   $data
      */
-    protected function logDatabaseAction($sql, $affectedRowsCount, $insertId = null,
-                                         $data = null)
+    protected function logDatabaseAction( $sql,
+                                          $affectedRowsCount,
+                                          $insertId = null,
+                                          $data = null )
     {
         $logger = $this->_logger;
         if($logger == null)

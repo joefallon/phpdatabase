@@ -20,12 +20,10 @@ class AbstractJoinTableGatewayTests extends UnitTest
 
         $path   = realpath(BASE_PATH . '/tests/logs') . '/' . date('Y-m-d') . '.log';
         $logger = new Log($path, Log::DEBUG);
-        $timer  = new Chronograph();
 
         try
         {
-            $gtwy = new ConcreteJoinTableGateway($pdo, '', 'id1', 'id2',
-                                                 $timer, $logger);
+            $gtwy = new ConcreteJoinTableGateway($pdo, '', 'id1', 'id2', $logger);
         }
         catch(Exception $e)
         {
@@ -44,12 +42,11 @@ class AbstractJoinTableGatewayTests extends UnitTest
 
         $path   = realpath(BASE_PATH . '/tests/logs') . '/' . date('Y-m-d') . '.log';
         $logger = new Log($path, Log::DEBUG);
-        $timer  = new Chronograph();
 
         try
         {
             $gtwy = new ConcreteJoinTableGateway($pdo, 'join_tests',
-                                                 '', 'id2', $timer, $logger);
+                                                 '', 'id2', $logger);
         }
         catch(Exception $e)
         {
@@ -68,12 +65,11 @@ class AbstractJoinTableGatewayTests extends UnitTest
 
         $path   = realpath(BASE_PATH . '/tests/logs') . '/' . date('Y-m-d') . '.log';
         $logger = new Log($path, Log::DEBUG);
-        $timer  = new Chronograph();
 
         try
         {
             $gtwy = new ConcreteJoinTableGateway($pdo, 'join_tests',
-                                                 'id1', '', $timer, $logger);
+                                                 'id1', '', $logger);
         }
         catch(Exception $e)
         {
@@ -135,8 +131,7 @@ class AbstractJoinTableGatewayTests extends UnitTest
         $path   = realpath(BASE_PATH . '/tests/logs') . '/' . date('Y-m-d') . '.log';
         $logger = new Log($path, Log::DEBUG);
         $timer  = new Chronograph();
-        $gtwy   = new ConcreteJoinTableGateway($pdo, 'join_tests', 'id1', 'id2',
-                                               $timer, $logger);
+        $gtwy   = new ConcreteJoinTableGateway($pdo, 'join_tests', 'id1', 'id2', $logger);
 
         return $gtwy;
     }

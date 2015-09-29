@@ -15,10 +15,9 @@ class ConcreteTableGateway extends AbstractTableGateway
 {
     public function __construct(PDO $db,
                                 $tableName,
-                                Chronograph $timer,
                                 LoggerInterface $logger)
     {
-        parent::__construct($db, $tableName, $timer, $logger);
+        parent::__construct($db, $tableName, $logger);
     }
 
 
