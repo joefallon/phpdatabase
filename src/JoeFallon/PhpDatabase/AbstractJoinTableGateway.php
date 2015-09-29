@@ -35,7 +35,6 @@ abstract class AbstractJoinTableGateway
      * @param string          $tableName Name of the table.
      * @param string          $id1Name   Name of first id column.
      * @param string          $id2Name   Name of second id column.
-     * @param Chronograph     $timer     This is used for metrics.
      * @param LoggerInterface $logger    This is used for logging.
      *
      * @throws Exception
@@ -44,7 +43,6 @@ abstract class AbstractJoinTableGateway
                                    $tableName,
                                    $id1Name,
                                    $id2Name,
-                                   Chronograph $timer = null,
                                    LoggerInterface $logger = null)
     {
         if(!isset($tableName) || strlen($tableName) == 0)
@@ -66,7 +64,7 @@ abstract class AbstractJoinTableGateway
         $this->_tableName = $tableName;
         $this->_id1Name   = $id1Name;
         $this->_id2Name   = $id2Name;
-        $this->_timer     = $timer;
+        $this->_timer     = new Chronograph();
         $this->_logger    = $logger;
     }
 
