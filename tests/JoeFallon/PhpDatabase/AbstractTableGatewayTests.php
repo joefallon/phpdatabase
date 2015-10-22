@@ -1,12 +1,9 @@
 <?php
 namespace tests\JoeFallon\PhpDatabase;
 
-
 use InvalidArgumentException;
 use JoeFallon\KissTest\UnitTest;
 use JoeFallon\PhpLog\Log;
-use JoeFallon\PhpTime\Chronograph;
-
 use PDO;
 
 /**
@@ -563,4 +560,5 @@ class AbstractTableGatewayTests extends UnitTest
         // Perform clean-up.
         $gtwy->delete($id);
     }
+
 }
