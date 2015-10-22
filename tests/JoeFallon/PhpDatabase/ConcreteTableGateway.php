@@ -151,12 +151,25 @@ class ConcreteTableGateway extends AbstractTableGateway
         return $this->baseUpdate($e);
     }
 
-
+    /**
+     * @param $val
+     *
+     * @return int
+     */
     public function countByNullableValue($val)
     {
         return $this->baseCountBy('nullable_val', $val);
     }
 
+    /**
+     * @param $val
+     *
+     * @return int
+     */
+    public function countBy($val)
+    {
+        return $this->baseCountBy('nullable_val', $val);
+    }
 
     /**
      * convertArrayToObject

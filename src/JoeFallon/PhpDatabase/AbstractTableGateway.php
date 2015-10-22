@@ -42,14 +42,14 @@ abstract class AbstractTableGateway
      *
      * @return array
      */
-    protected abstract function convertObjectToArray($object);
+    abstract protected function convertObjectToArray($object);
 
     /**
      * @param array $array
      *
      * @return mixed
      */
-    protected abstract function convertArrayToObject($array);
+    abstract protected function convertArrayToObject($array);
 
     /**
      * This function inserts the data, updates the id, created and
@@ -467,12 +467,7 @@ abstract class AbstractTableGateway
         $this->stopTimer();
         $this->logDatabaseAction($sql, count($rows), null, $data);
 
-        if(count($results) == 1)
-        {
-            return intval($results[0]['cnt']);
-        }
-
-        return 0;
+        return intval($results[0]['cnt']);
     }
 
     protected function startTimer()

@@ -560,4 +560,5 @@ class AbstractTableGatewayTests extends UnitTest
         // Perform clean-up.
         $gtwy->delete($id);
     }
+
 }
