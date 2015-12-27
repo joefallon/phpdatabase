@@ -3,11 +3,28 @@ namespace tests\JoeFallon\PhpDatabase;
 
 class ExampleEntity
 {
+    /** @var int */
     private $_id;
+    /** @var string */
     private $_name;
+    /** @var string */
     private $_nullable;
+    /** @var int */
+    private $_numeral;
+    /** @var string */
     private $_created;
+    /** @var string */
     private $_updated;
+
+    public function __construct()
+    {
+        $this->_id = 0;
+        $this->_name = "";
+        $this->_nullable = "";
+        $this->_numeral = 0;
+        $this->_created = "";
+        $this->_updated = "";
+    }
 
     /**
      * @return int
@@ -38,7 +55,7 @@ class ExampleEntity
      */
     public function setName($name)
     {
-        $this->_name = $name;
+        $this->_name = (string)$name;
     }
 
     /**
@@ -54,7 +71,23 @@ class ExampleEntity
      */
     public function setNullable($nullable)
     {
-        $this->_nullable = $nullable;
+        $this->_nullable = (string)$nullable;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumeral()
+    {
+        return $this->_numeral;
+    }
+
+    /**
+     * @param int $numeral
+     */
+    public function setNumeral($numeral)
+    {
+        $this->_numeral = (int)$numeral;
     }
 
     /**
@@ -88,5 +121,4 @@ class ExampleEntity
     {
         $this->_updated = $updated;
     }
-
 }

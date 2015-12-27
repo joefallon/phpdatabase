@@ -4,30 +4,30 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c28375a36167dd284b740e34971fa77d",
-    "content-hash": "67cd4b5089100e16bf1637a1029dc639",
+    "hash": "1218db47e341a822551081d1817dd61f",
+    "content-hash": "a29a114be744ddfa5dd5af4c81a3a00d",
     "packages": [
         {
             "name": "joefallon/phplog",
-            "version": "v3.1.1",
+            "version": "v3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joefallon/phplog.git",
-                "reference": "2c45364c0798d41e8260aef5b52169dbccd3e1dc"
+                "reference": "087c86001a4227009c67e9a000a9c99804d2f8c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joefallon/phplog/zipball/2c45364c0798d41e8260aef5b52169dbccd3e1dc",
-                "reference": "2c45364c0798d41e8260aef5b52169dbccd3e1dc",
+                "url": "https://api.github.com/repos/joefallon/phplog/zipball/087c86001a4227009c67e9a000a9c99804d2f8c3",
+                "reference": "087c86001a4227009c67e9a000a9c99804d2f8c3",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0",
-                "psr/log": "~1.0"
+                "psr/log": "^1.0"
             },
             "require-dev": {
-                "joefallon/kisstest": "~1.0",
-                "joefallon/phpautoloader": "~2.0"
+                "joefallon/kisstest": "^2.0",
+                "joefallon/phpautoloader": "^2.0"
             },
             "type": "library",
             "autoload": {
@@ -46,34 +46,34 @@
                     "homepage": "http://blog.joefallon.net"
                 }
             ],
-            "description": "This package contains simple to use logger",
+            "description": "This package contains simple PSR logger that minimizes line length.",
             "homepage": "https://github.com/joefallon/phplog",
             "keywords": [
                 "log",
                 "logger"
             ],
-            "time": "2015-02-05 18:39:04"
+            "time": "2015-12-27 22:47:17"
         },
         {
             "name": "joefallon/phptime",
-            "version": "v3.0.1",
+            "version": "v4.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joefallon/phptime.git",
-                "reference": "5369a1e52e1a2f35ae81a9dc0f948a22d0729592"
+                "reference": "d5e3fadb0947af725bc562c9300a76e37c706b0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joefallon/phptime/zipball/5369a1e52e1a2f35ae81a9dc0f948a22d0729592",
-                "reference": "5369a1e52e1a2f35ae81a9dc0f948a22d0729592",
+                "url": "https://api.github.com/repos/joefallon/phptime/zipball/d5e3fadb0947af725bc562c9300a76e37c706b0c",
+                "reference": "d5e3fadb0947af725bc562c9300a76e37c706b0c",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
             "require-dev": {
-                "joefallon/kisstest": "~1.0",
-                "joefallon/phpautoloader": "~2.0"
+                "joefallon/kisstest": "^2.0",
+                "joefallon/phpautoloader": "^2.0"
             },
             "type": "library",
             "autoload": {
@@ -100,7 +100,7 @@
                 "php",
                 "time"
             ],
-            "time": "2015-01-10 00:35:54"
+            "time": "2015-12-27 17:36:25"
         },
         {
             "name": "psr/log",
@@ -152,24 +152,23 @@
     "packages-dev": [
         {
             "name": "joefallon/kisstest",
-            "version": "v1.3.4",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joefallon/kisstest.git",
-                "reference": "9c8a68e26d184bc1fa0e2bf15d09e6a320799189"
+                "reference": "ef60257e1965129b56bdd57bd0d05f6a4afe67ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joefallon/kisstest/zipball/9c8a68e26d184bc1fa0e2bf15d09e6a320799189",
-                "reference": "9c8a68e26d184bc1fa0e2bf15d09e6a320799189",
+                "url": "https://api.github.com/repos/joefallon/kisstest/zipball/ef60257e1965129b56bdd57bd0d05f6a4afe67ac",
+                "reference": "ef60257e1965129b56bdd57bd0d05f6a4afe67ac",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0",
-                "phpunit/php-code-coverage": "~2.0"
+                "php": ">=5.4.0"
             },
             "require-dev": {
-                "joefallon/phpautoloader": "~2.0"
+                "joefallon/phpautoloader": "^2.0.0"
             },
             "type": "library",
             "autoload": {
@@ -188,27 +187,27 @@
                     "homepage": "http://blog.joefallon.net"
                 }
             ],
-            "description": "KissTest is a gorgeous and fast unit testing framework for PHP that does not require use of the command line.",
+            "description": "KissTest is command-line free, fast, simple and beautiful unit test framework.",
             "homepage": "https://github.com/joefallon/kisstest",
             "keywords": [
                 "test",
                 "unit-test",
                 "xunit"
             ],
-            "time": "2015-07-02 17:59:04"
+            "time": "2015-12-27 17:27:07"
         },
         {
             "name": "joefallon/phpautoloader",
-            "version": "v2.0.3",
+            "version": "v2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joefallon/phpautoloader.git",
-                "reference": "3dd432e44d6d709b86a9ed60e3aa09375b1d49af"
+                "reference": "940cc57d3219d210e0135355bf329d39a26f30fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joefallon/phpautoloader/zipball/3dd432e44d6d709b86a9ed60e3aa09375b1d49af",
-                "reference": "3dd432e44d6d709b86a9ed60e3aa09375b1d49af",
+                "url": "https://api.github.com/repos/joefallon/phpautoloader/zipball/940cc57d3219d210e0135355bf329d39a26f30fd",
+                "reference": "940cc57d3219d210e0135355bf329d39a26f30fd",
                 "shasum": ""
             },
             "type": "library",
@@ -237,229 +236,7 @@
                 "namespace",
                 "psr-0"
             ],
-            "time": "2015-02-05 19:08:04"
-        },
-        {
-            "name": "phpunit/php-file-iterator",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
-                "reference": "6150bf2c35d3fc379e50c7602b75caceaa39dbf0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/6150bf2c35d3fc379e50c7602b75caceaa39dbf0",
-                "reference": "6150bf2c35d3fc379e50c7602b75caceaa39dbf0",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.4.x-dev"
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Sebastian Bergmann",
-                    "email": "sb@sebastian-bergmann.de",
-                    "role": "lead"
-                }
-            ],
-            "description": "FilterIterator implementation that filters files based on a list of suffixes.",
-            "homepage": "https://github.com/sebastianbergmann/php-file-iterator/",
-            "keywords": [
-                "filesystem",
-                "iterator"
-            ],
-            "time": "2015-06-21 13:08:43"
-        },
-        {
-            "name": "phpunit/php-text-template",
-            "version": "1.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sebastianbergmann/php-text-template.git",
-                "reference": "31f8b717e51d9a2afca6c9f046f5d69fc27c8686"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-text-template/zipball/31f8b717e51d9a2afca6c9f046f5d69fc27c8686",
-                "reference": "31f8b717e51d9a2afca6c9f046f5d69fc27c8686",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
-                }
-            ],
-            "description": "Simple template engine.",
-            "homepage": "https://github.com/sebastianbergmann/php-text-template/",
-            "keywords": [
-                "template"
-            ],
-            "time": "2015-06-21 13:50:34"
-        },
-        {
-            "name": "phpunit/php-token-stream",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "cab6c6fefee93d7b7c3a01292a0fe0884ea66644"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/cab6c6fefee93d7b7c3a01292a0fe0884ea66644",
-                "reference": "cab6c6fefee93d7b7c3a01292a0fe0884ea66644",
-                "shasum": ""
-            },
-            "require": {
-                "ext-tokenizer": "*",
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.4-dev"
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de"
-                }
-            ],
-            "description": "Wrapper around PHP's tokenizer extension.",
-            "homepage": "https://github.com/sebastianbergmann/php-token-stream/",
-            "keywords": [
-                "tokenizer"
-            ],
-            "time": "2015-09-23 14:46:55"
-        },
-        {
-            "name": "sebastian/environment",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "6e7133793a8e5a5714a551a8324337374be209df"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/6e7133793a8e5a5714a551a8324337374be209df",
-                "reference": "6e7133793a8e5a5714a551a8324337374be209df",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.4"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.3.x-dev"
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de"
-                }
-            ],
-            "description": "Provides functionality to handle HHVM/PHP environments",
-            "homepage": "http://www.github.com/sebastianbergmann/environment",
-            "keywords": [
-                "Xdebug",
-                "environment",
-                "hhvm"
-            ],
-            "time": "2015-12-02 08:37:27"
-        },
-        {
-            "name": "sebastian/version",
-            "version": "1.0.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sebastianbergmann/version.git",
-                "reference": "58b3a85e7999757d6ad81c787a1fbf5ff6c628c6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/version/zipball/58b3a85e7999757d6ad81c787a1fbf5ff6c628c6",
-                "reference": "58b3a85e7999757d6ad81c787a1fbf5ff6c628c6",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
-                }
-            ],
-            "description": "Library that helps with managing the version number of Git-hosted PHP projects",
-            "homepage": "https://github.com/sebastianbergmann/version",
-            "time": "2015-06-21 13:59:46"
+            "time": "2015-12-27 17:23:01"
         }
     ],
     "aliases": [],
