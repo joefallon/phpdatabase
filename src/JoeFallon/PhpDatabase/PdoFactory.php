@@ -25,36 +25,6 @@ class PdoFactory
         $dbHost = strval($dbHost);
         $dbPort = strval($dbPort);
 
-        if(strlen($dbName) == 0)
-        {
-            $msg = 'DB name is empty.';
-            throw new Exception($msg);
-        }
-
-        if(strlen($dbHost) == 0)
-        {
-            $msg = 'DB host is empty.';
-            throw new Exception($msg);
-        }
-
-        if(strlen($dbPort) == 0)
-        {
-            $msg = 'DB port is empty.';
-            throw new Exception($msg);
-        }
-
-        if(strlen($dbUser) == 0)
-        {
-            $msg = 'DB user is empty.';
-            throw new Exception($msg);
-        }
-
-        if(strlen($dbPass) == 0)
-        {
-            $msg = 'DB pass is empty.';
-            throw new Exception($msg);
-        }
-
         $dsn = "mysql:host=$dbHost;port=$dbPort;dbname=$dbName";
         $db = new PDO($dsn, $dbUser, $dbPass);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
