@@ -28,7 +28,6 @@ and run the `php composer.phar install` command to install it.
 There are four main classes are are used to represent all of the relationships
 within a database: 
 
-*   `AbstractEntity`
 *   `AbstractTableGateway`
 *   `AbstractJoinTableGateway`
 *   `PdoFactory`
@@ -36,22 +35,15 @@ within a database:
 ### Entities
 
 An entity is a class that represents a single row within a database. All entities 
-are subclasses of `AbstractEntity`. All abstract entities contain the following 
-data fields:
+must contain a `primary key` feild and optionally a `created at` and `updated at` field:
 
-*   `id` - This is the primary key of the row.
-*   `created` - This is the date and time that the row was created.
-*   `updated` - This is the date and time that the row was last updated.
+*   `primary key` - This is the primary key of the row. It can be named anything. 
+*   `created at` - This is the date and time that the row was created. It can be named anything.
+*   `updated at` - This is the date and time that the row was last updated. It can be named anything.
     
-Additional data fields are added to `AbstractEntity`. Each data field that is 
-added to `AbstractEntity` and should correlate one-to-one with columns within a 
+Additional data fields are added to the entity. Each data field that is 
+added to the entity and should correlate one-to-one with columns within a 
 given table. 
-
-In addition to the data fields, each subclass of `AbstractEntity` also
-contains the `isValid` valid. The `isValid` method returns true when the entity is
-considered valid and can be stored within the database. When an entity is considered
-invalid, the entity should store messages within the entity. It is best if the messages
-are written in a way as to be usable for display to the user.
 
 ### Abstract Table Gateway
 
@@ -59,9 +51,9 @@ Instances of subclasses of `AbstractTableGateway` are used to mediate all access
 a table within the database. 
 
 Each subclass must implement the abstract methods
-`convertObjectToArray` and `convertArrayToObject`. The method `convertObjectToArray`
+`mapObjectToArray` and `mapArrayToObject`. The method `mapObjectToArray`
 is used to convert an entity to an associative array. The names of the keys map
-to the column names within the database. The method `convertArrayToObject` is
+to the column names within the database. The method `mapArrayToObject` is
 used to convert an associative array that was retrieved from the database into
 an object.
 
@@ -70,9 +62,9 @@ There are four major methods that are used to provide the basic CRUD (i.e. Creat
 Retrieve, Update, Delete) access to the database. The the following methods are
 used to provide public access:
 
-*   `baseCreate(AbstractEntity $entity)`
+*   `baseCreate($entity)`
 *   `baseRetrieve($id)`
-*   `baseUpdate(AbstractEntity $entity)`
+*   `baseUpdate($entity)`
 *   `baseDelete($id)`
 
 ### Abstract Join-Table Gateway
@@ -83,3 +75,8 @@ The class `AbstractJoinTableGateway` is used mediate access to join tables
 ### PDO Factory
 
 The `PdoFactory` factory class is used to create a PHP `PDO` object.
+
+### Usage
+
+Please refer to the [unit tests](https://github.com/joefallon/phpdatabase/tree/master/tests)
+for a detailed example of how to use this package.

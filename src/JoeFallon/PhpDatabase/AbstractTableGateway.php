@@ -1,40 +1,33 @@
 <?php
 namespace JoeFallon\PhpDatabase;
 
-use InvalidArgumentException;
-use JoeFallon\PhpTime\Chronograph;
 use PDO;
-use Psr\Log\LoggerInterface;
-use stdClass;
 
-/**
- * @author    Joseph Fallon <joseph.t.fallon@gmail.com>
- * @copyright Copyright 2014 Joseph Fallon (All rights reserved)
- * @license   MIT
- */
 abstract class AbstractTableGateway
 {
     /** @var PDO */
-    protected $_db;
+    protected $_pdo;
     /** @var string */
     protected $_tableName;
-    /** @var Chronograph */
-    protected $_timer;
-    /** @var LoggerInterface */
-    protected $_logger;
-
+    /** @var string */
+    protected $_primaryKeyName;
+    /** @var string */
+    protected $_createdAtName;
+    /** @var string */
+    protected $_updatedAtName;
 
     /**
-     * @param PDO             $db
-     * @param string          $tableName Name of the table.
-     * @param LoggerInterface $logger    This is used for logging.
+     * @param PDO    $db
+     * @param string $tableName      Name of the table.
+     * @param string $primaryKeyName Name of the integer primary key column.
      */
-    protected function __construct(PDO $db, $tableName, LoggerInterface $logger = null)
+    protected function __construct(PDO $db, $tableName, $primaryKeyName = 'id')
     {
-        $this->_db        = $db;
+        $this->_pdo = $db;
         $this->_tableName = $tableName;
-        $this->_timer     = new Chronograph();
-        $this->_logger    = $logger;
+        $this->_primaryKeyName = $primaryKeyName;
+        $this->_createdAtName = "";
+        $this->_updatedAtName = "";
     }
 
     /**
@@ -42,105 +35,255 @@ abstract class AbstractTableGateway
      *
      * @return array
      */
-    abstract protected function convertObjectToArray($object);
+    abstract protected function mapObjectToArray($object);
 
     /**
      * @param array $array
      *
      * @return mixed
      */
-    abstract protected function convertArrayToObject($array);
+    abstract protected function mapArrayToObject($array);
 
     /**
-     * This function inserts the data, updates the id, created and
-     * updated timestamps, and returns the inserted id on success
-     * zero on failure.
-     *
-     * @param AbstractEntity $entity
-     *
-     * @return int
-     * @throws InvalidArgumentException
+     * @param string $val
      */
-    protected function baseCreate(AbstractEntity $entity)
+    public function setCreatedAtName($val)
     {
-        $tableName = $this->_tableName;
-        $db        = $this->_db;
-
-        $this->startTimer();
-
-        if($entity->isValid() == false)
-        {
-            $msg = 'Entity is invalid.';
-            throw new InvalidArgumentException($msg);
-        }
-
-        $data = $this->convertObjectToArray($entity);
-
-        $data['created'] = date('Y-m-d H:i:s');
-        $data['updated'] = date('Y-m-d H:i:s');
-
-        $colNames       = $this->getColumnNames($data);
-        $bindParamNames = $this->getBindParameterNames($data);
-        $bindParams     = $this->convertToBindParamArray($data);
-
-        $sql = "INSERT INTO $tableName  ( " . implode(", ", $colNames) . " ) "
-               . "VALUES ( " . implode(", ", $bindParamNames) . " )";
-
-        $stmt = $db->prepare($sql);
-        $stmt->execute($bindParams);
-        $insertedId = intval($db->lastInsertId());
-        $data['id'] = $insertedId;
-
-        $entity->setId($insertedId);
-        $entity->setCreated($data['created']);
-        $entity->setUpdated($data['updated']);
-        $rowsAffected = $insertedId > 0 ? 1 : 0;
-
-        $this->stopTimer();
-        $this->logDatabaseAction($sql, $rowsAffected, $insertedId, $data);
-
-        return $insertedId;
+        $this->_createdAtName = (string)$val;
     }
 
     /**
-     * This function retrieves the object from the database
-     * specified by the $id. This method assumes the primary key of the
-     * table is named `id`.
-     *
-     * @param integer $id Id of the object to return.
-     *
-     * @return mixed  The retrieved row, converted to an object.
+     * @param string $val
      */
-    protected function baseRetrieve($id)
+    public function setUpdatedAtName($val)
     {
-        $id        = intval($id);
-        $tableName = $this->_tableName;
-        $db        = $this->_db;
-        $result    = null;
+        $this->_updatedAtName = (string)$val;
+    }
 
-        $this->startTimer();
+    /**
+     * @param mixed $entity
+     *
+     * @return string
+     */
+    protected function baseCreate($entity)
+    {
+        $pdo    = $this->_pdo;
+        $table  = $this->_tableName;
+        $pkName = $this->_primaryKeyName;
 
-        $sql  = "SELECT * FROM $tableName WHERE id = :id LIMIT 1";
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(':id', $id);
-        $stmt->execute();
-        $row    = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $rowCnt = count($row);
+        $data = $this->mapObjectToArray($entity);
+        $data = $this->timeStampCreatedColumn($data);
+        $data = $this->timeStampUpdatedColumn($data);
+        unset($data[$pkName]);
 
-        if($rowCnt > 0)
+        $columnNamesArr = $this->getQuotedColumnNames($data);
+        $columnNamesStr = implode(', ', $columnNamesArr);
+        $paramNamesArr  = $this->getParameterNames($data);
+        $paramNamesStr  = implode(', ', $paramNamesArr);
+
+        $sql = "INSERT INTO $table ( " . $columnNamesStr . " ) VALUES ( " . $paramNamesStr . " )";
+
+        $statement = $pdo->prepare($sql);
+        $bindParameters = $this->bindParameterData($data);
+        $statement->execute($bindParameters);
+
+        return $pdo->lastInsertId();
+    }
+
+    /**
+     * This function updates the "created at" timestamp with the current time if the name
+     * for the "created at" timestamp column has been previously specified.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function timeStampCreatedColumn(array $data)
+    {
+        $createdAtColumnName = $this->_createdAtName;
+
+        if(strlen($createdAtColumnName) > 0)
         {
-            /* @var $result AbstractEntity */
-            $result = $this->convertArrayToObject($row[0]);
+            $data[$createdAtColumnName] = date('Y-m-d H:i:s');
         }
 
-        $data = count($row) > 0 ? $row[0] : "id --> $id";
+        return $data;
+    }
 
-        $this->stopTimer();
-        $this->logDatabaseAction($sql, $rowCnt, null, $data);
+    /**
+     * This function updates the "updated at" timestamp with the current time if the name
+     * for the "updated at" timestamp column has been previously specified.
+     *
+     * @param $data
+     *
+     * @return mixed
+     */
+    protected function timeStampUpdatedColumn($data)
+    {
+        $updatedAtColumnName = $this->_updatedAtName;
+
+        if(strlen($updatedAtColumnName) > 0)
+        {
+            $data[$updatedAtColumnName] = date('Y-m-d H:i:s');
+        }
+
+        return $data;
+    }
+
+    /**
+     * Example: ["`colName1`", "`colName2`"]
+     *
+     * @param $data
+     *
+     * @return array
+     */
+    protected function getQuotedColumnNames($data)
+    {
+        $keys    = array_keys($data);
+        $results = [];
+
+        foreach($keys as $k)
+        {
+            $results[] = "`$k`";
+        }
+
+        return $results;
+    }
+
+    /**
+     * Example: [":colName1", ":colName2"]
+     *
+     * @param $data
+     *
+     * @return array
+     */
+    protected function getParameterNames($data)
+    {
+        $keys = array_keys($data);
+        $results = [];
+
+        foreach($keys as $k)
+        {
+            $results[] = ":$k";
+        }
+
+        return $results;
+    }
+
+    /**
+     * Example Result:
+     * [
+     *      ":col1" => "column 1 value",
+     *      ":col2" => "column 2 value",
+     * ]
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function bindParameterData($data)
+    {
+        $bindParams = array();
+
+        foreach($data as $key => $value)
+        {
+            $bindParams[':' . $key] = $value;
+        }
+
+        return $bindParams;
+    }
+
+    /**
+     * @param $primaryKey
+     *
+     * @return mixed|null
+     */
+    protected function baseRetrieve($primaryKey)
+    {
+        $primaryKey     = (int)$primaryKey;
+        $primaryKeyName = $this->_primaryKeyName;
+        $tableName      = $this->_tableName;
+        $pdo            = $this->_pdo;
+
+        $sql = "SELECT * FROM $tableName WHERE `$primaryKeyName`=$primaryKey LIMIT 1";
+
+        $statement = $pdo->prepare($sql);
+        $statement->execute();
+        $row = $statement->fetchAll();
+
+        if(count($row) == 0)
+        {
+            return null;
+        }
+
+        return $this->mapArrayToObject($row[0]);
+    }
+
+    /**
+     * @param mixed $entity
+     *
+     * @return int
+     */
+    protected function baseUpdate($entity)
+    {
+        $pdo    = $this->_pdo;
+        $data   = $this->mapObjectToArray($entity);
+        $data   = $this->timeStampUpdatedColumn($data);
+        $table  = $this->_tableName;
+        $pkName = $this->_primaryKeyName;
+        $pk     = intval($data[$pkName]);
+
+        $parametersArray  = $this->getParameterizedColumnNames($data);
+        $parametersString = implode(', ', $parametersArray);
+
+        $sql = "UPDATE $table SET $parametersString WHERE `$pkName`=$pk";
+
+        $statement      = $pdo->prepare($sql);
+        $bindParameters = $this->bindParameterData($data);
+        $statement->execute($bindParameters);
+
+        return $statement->rowCount();
+    }
+
+    /**
+     * Example Result: ["`col1`=:col1", "`col2`=:col2"]
+     *
+     * @param $data
+     *
+     * @return array
+     */
+    protected function getParameterizedColumnNames($data)
+    {
+        $keys = array_keys($data);
+        $result = [];
+
+        foreach($keys as $k)
+        {
+            $result[] = "`$k`=:$k";
+        }
 
         return $result;
     }
 
+    /**
+     * @param int $primaryKey
+     *
+     * @return int Rows affected
+     */
+    protected function baseDelete($primaryKey)
+    {
+        $primaryKey = (int)$primaryKey;
+        $pdo    = $this->_pdo;
+        $table  = $this->_tableName;
+        $pkName = $this->_primaryKeyName;
+
+        $sql = "DELETE FROM $table WHERE `$pkName`=$primaryKey";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(":$pkName", $primaryKey);
+        $stmt->execute();
+
+        return $stmt->rowCount();
+    }
 
     /**
      * @param string $fieldName
@@ -150,73 +293,50 @@ abstract class AbstractTableGateway
      */
     protected function baseRetrieveBy($fieldName, $fieldValue)
     {
-        $fieldName = strval($fieldName);
-        $fieldVal  = strval($fieldValue);
-        $db        = $this->_db;
-        $tableName = $this->_tableName;
-        $results   = array();
+        $fieldName  = (string)$fieldName;
+        $fieldValue = (string)$fieldValue;
 
-        $this->startTimer();
+        $pdo   = $this->_pdo;
+        $table = $this->_tableName;
 
-        $sql  = "SELECT * FROM $tableName WHERE $fieldName = :$fieldName";
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(':' . $fieldName, $fieldVal);
-        $stmt->execute();
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $sql = "SELECT * FROM $table WHERE `$fieldName`=:$fieldName";
 
-        foreach($rows as $row)
+        $statement = $pdo->prepare($sql);
+        $statement->bindValue(":$fieldName", $fieldValue);
+        $statement->execute();
+
+        $results = [];
+
+        while($row = $statement->fetch(PDO::FETCH_ASSOC))
         {
-            $results[] = $this->convertArrayToObject($row);
+            $results[] = $this->mapArrayToObject($row);
         }
-
-        $data = "fieldValue --> $fieldValue";
-
-        $this->stopTimer();
-        $this->logDatabaseAction($sql, count($rows), null, $data);
 
         return $results;
     }
 
-
     /**
-     * @param array $ids
+     * @param array $primaryKeysArray
      *
      * @return array
      */
-    protected function baseRetrieveByIds($ids)
+    protected function baseRetrieveByIds(array $primaryKeysArray)
     {
-        $db        = $this->_db;
-        $tableName = $this->_tableName;
-        $results   = array();
+        $pdo     = $this->_pdo;
+        $table   = $this->_tableName;
+        $keyList = implode(', ', $primaryKeysArray);
 
-        $this->startTimer();
+        $sql = "SELECT * FROM $table WHERE id IN ( $keyList )";
 
-        $sql = "SELECT * FROM $tableName WHERE id IN ( ";
+        $statement = $pdo->prepare($sql);
+        $statement->execute();
 
-        foreach($ids as $k => $v)
+        $results = [];
+
+        while($row = $statement->fetch(PDO::FETCH_ASSOC))
         {
-            $sql .= intval($v);
-
-            if($k != (count($ids) - 1))
-            {
-                $sql .= ', ';
-            }
+            $results[] = $this->mapArrayToObject($row);
         }
-
-        $sql .= ' )';
-
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        foreach($rows as $row)
-        {
-            $result    = $this->convertArrayToObject($row);
-            $results[] = $result;
-        }
-
-        $this->stopTimer();
-        $this->logDatabaseAction($sql, count($rows));
 
         return $results;
     }
@@ -228,28 +348,20 @@ abstract class AbstractTableGateway
      */
     protected function baseRetrieveByIsNull($fieldName)
     {
-        $fieldName = strval($fieldName);
-        $db        = $this->_db;
-        $tableName = $this->_tableName;
-        $results   = array();
+        $fieldName = (string)$fieldName;
+        $pdo       = $this->_pdo;
+        $table     = $this->_tableName;
 
-        $this->startTimer();
+        $sql = "SELECT * FROM $table WHERE `$fieldName` IS NULL";
+        $statement = $pdo->prepare($sql);
+        $statement->execute();
 
-        $sql  = "SELECT * FROM $tableName WHERE $fieldName IS NULL";
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $results = [];
 
-        foreach($rows as $row)
+        while($row = $statement->fetch(PDO::FETCH_ASSOC))
         {
-            $result    = $this->convertArrayToObject($row);
-            $results[] = $result;
+            $results[] = $this->mapArrayToObject($row);
         }
-
-        $data = "fieldValue --> 'NULL'";
-
-        $this->stopTimer();
-        $this->logDatabaseAction($sql, count($rows), null, $data);
 
         return $results;
     }
@@ -262,314 +374,105 @@ abstract class AbstractTableGateway
      */
     protected function baseRetrieveByNotEqual($fieldName, $fieldValue)
     {
-        $fieldName  = strval($fieldName);
-        $fieldValue = strval($fieldValue);
-        $db         = $this->_db;
-        $tableName  = $this->_tableName;
-        $results    = array();
+        $fieldName  = (string)$fieldName;
+        $fieldValue = (string)$fieldValue;
 
-        $this->startTimer();
+        $pdo   = $this->_pdo;
+        $table = $this->_tableName;
 
-        $sql  = "SELECT * FROM $tableName WHERE $fieldName != :$fieldName";
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(':' . $fieldName, $fieldValue);
-        $stmt->execute();
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $sql = "SELECT * FROM $table WHERE `$fieldName` != :$fieldName";
+        $statement = $pdo->prepare($sql);
+        $statement->bindValue(":$fieldName", $fieldValue);
+        $statement->execute();
 
-        foreach($rows as $row)
+        $results = [];
+
+        while($row = $statement->fetch(PDO::FETCH_ASSOC))
         {
-            $result    = $this->convertArrayToObject($row);
-            $results[] = $result;
+            $results[] = $this->mapArrayToObject($row);
         }
-
-        $data = "fieldValue --> $fieldValue";
-
-        $this->stopTimer();
-        $this->logDatabaseAction($sql, count($rows), null, $data);
 
         return $results;
     }
 
     /**
-     * @param AbstractEntity $entity
-     *
-     * @return int Rows Affected
-     */
-    protected function baseUpdate(AbstractEntity $entity)
-    {
-        $db        = $this->_db;
-        $tableName = $this->_tableName;
-
-        $this->startTimer();
-
-        $data            = $this->convertObjectToArray($entity);
-        $data['updated'] = date('Y-m-d H:i:s');
-
-        $colNames       = $this->getColumnNames($data);
-        $bindParamNames = $this->getBindParameterNames($data);
-        $bindParams     = $this->convertToBindParamArray($data);
-        $count          = count($colNames);
-
-        // Construct the SQL query.
-        $sql = "UPDATE " . $tableName . " SET ";
-
-        for($i = 0; $i < $count; $i++)
-        {
-            if($colNames[$i] == 'id' || $bindParamNames[$i] == ':id')
-            {
-                continue;
-            }
-
-            $sql .= $colNames[$i] . " = " . $bindParamNames[$i];
-
-            if($i < $count - 1)
-            {
-                $sql .= ", ";
-            }
-            else
-            {
-                $sql .= " ";
-            }
-        }
-
-        $sql .= ' WHERE id = :id';
-
-        $stmt = $db->prepare($sql);
-        $stmt->execute($bindParams);
-        $rowsAffected = intval($stmt->rowCount());
-
-        $this->stopTimer();
-        $this->logDatabaseAction($sql, $rowsAffected, null, $data);
-
-        return $rowsAffected;
-    }
-
-
-    /**
      * @param string $fieldName
      * @param mixed  $fieldValue
-     *
-     * @return int Rows Affected
-     */
-    protected function baseSetFieldNull($fieldName, $fieldValue)
-    {
-        $fieldName = strval($fieldName);
-        $fieldVal  = strval($fieldValue);
-        $tableName = $this->_tableName;
-        $db        = $this->_db;
-
-        $this->startTimer();
-
-        $sql  = 'UPDATE ' . $tableName
-                . ' SET ' . $fieldName . ' = NULL, '
-                . " updated = '" . date('Y-m-d H:i:s') . "'"
-                . ' WHERE ' . $fieldName . ' = :' . $fieldName;
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(':' . $fieldName, $fieldVal);
-        $stmt->execute();
-        $rowsAffected = $stmt->rowCount();
-
-        $data = "fieldValue --> $fieldValue";
-
-        $this->stopTimer();
-        $this->logDatabaseAction($sql, $rowsAffected, null, $data);
-
-        return $rowsAffected;
-    }
-
-    /**
-     * @param int $id
      *
      * @return int Rows affected
      */
-    protected function baseDelete($id)
+    protected function baseSetFieldNull($fieldName, $fieldValue)
     {
-        $id        = intval($id);
-        $db        = $this->_db;
-        $tableName = $this->_tableName;
+        $fieldName = (string)$fieldName;
+        $fieldVal = (string)$fieldValue;
 
-        $this->startTimer();
+        $table = $this->_tableName;
+        $pdo   = $this->_pdo;
 
-        $sql  = "DELETE FROM $tableName WHERE id = :id";
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(':id', $id);
-        $stmt->execute();
-        $rowsAffected = $stmt->rowCount();
+        if(strlen($this->_updatedAtName) > 0)
+        {
+            $updated = $this->_updatedAtName;
+            $now     = date('Y-m-d H:i:s');
+            $params  = "`$fieldName`=NULL, `$updated`='$now'";
+        }
+        else
+        {
+            $params = "`$fieldName`=NULL";
+        }
 
-        $data = "id --> $id";
+        $sql = "UPDATE $table SET $params WHERE `$fieldName`=:$fieldName";
 
-        $this->stopTimer();
-        $this->logDatabaseAction($sql, $rowsAffected, null, $data);
+        $statement = $pdo->prepare($sql);
+        $statement->bindValue(':' . $fieldName, $fieldVal);
+        $statement->execute();
 
-        return $rowsAffected;
-
+        return $statement->rowCount();
     }
 
     /**
      * @param string $fieldName
      * @param mixed  $fieldValue
      *
-     * @return int
+     * @return int Rows affected
      */
     protected function baseDeleteBy($fieldName, $fieldValue)
     {
-        $fieldName = strval($fieldName);
-        $fieldVal  = strval($fieldValue);
-        $db        = $this->_db;
-        $tableName = $this->_tableName;
+        $fieldName = (string)$fieldName;
+        $fieldVal  = (string)$fieldValue;
 
-        $this->startTimer();
+        $pdo   = $this->_pdo;
+        $table = $this->_tableName;
 
-        $sql = "DELETE FROM $tableName WHERE $fieldName = :$fieldName";
+        $sql = "DELETE FROM $table WHERE `$fieldName`=:$fieldName";
 
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(':' . $fieldName, $fieldVal);
-        $stmt->execute();
-        $rowsAffected = intval($stmt->rowCount());
+        $statement = $pdo->prepare($sql);
+        $statement->bindValue(":$fieldName", $fieldVal);
+        $statement->execute();
 
-        $data = "fieldValue --> $fieldValue";
-
-        $this->stopTimer();
-        $this->logDatabaseAction($sql, $rowsAffected, null, $data);
-
-        return $rowsAffected;
+        return $statement->rowCount();
     }
 
     /**
      * @param string $fieldName
      * @param mixed  $fieldValue
      *
-     * @return int
+     * @return int Row count
      */
     protected function baseCountBy($fieldName, $fieldValue)
     {
-        $fn      = strval($fieldName);
-        $fv      = strval($fieldValue);
-        $db      = $this->_db;
-        $tn      = $this->_tableName;
-        $results = array();
+        $fieldName  = (string)$fieldName;
+        $fieldValue = (string)$fieldValue;
 
-        $this->startTimer();
+        $pdo   = $this->_pdo;
+        $table = $this->_tableName;
 
-        $sql  = "SELECT COUNT($fn) AS cnt FROM $tn WHERE $fn = :$fn";
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(':' . $fn, $fv);
-        $stmt->execute();
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $sql = "SELECT COUNT($fieldName) AS val_count FROM $table WHERE `$fieldName`=:$fieldName";
 
-        foreach($rows as $row)
-        {
-            $results[] = $row;
-        }
+        $statement = $pdo->prepare($sql);
+        $statement->bindValue(":$fieldName", $fieldValue);
+        $statement->execute();
+        $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        $data = "fieldValue --> $fv";
-
-        $this->stopTimer();
-        $this->logDatabaseAction($sql, count($rows), null, $data);
-
-        return intval($results[0]['cnt']);
-    }
-
-    protected function startTimer()
-    {
-        if($this->_timer != null)
-        {
-            $this->_timer->start();
-        }
-    }
-
-    protected function stopTimer()
-    {
-        if($this->_timer != null)
-        {
-            $this->_timer->stop();
-        }
-    }
-
-    /**
-     * @param string $sql
-     * @param int    $affectedRowsCount
-     * @param null   $insertId
-     * @param null   $data
-     */
-    protected function logDatabaseAction( $sql,
-                                          $affectedRowsCount,
-                                          $insertId = null,
-                                          $data = null )
-    {
-        $logger = $this->_logger;
-        if($logger == null)
-        {
-            return;
-        }
-
-        $t = $this->_timer->getElapsedTimeInMillisecs() . 'mS';
-
-        $logger->info('----------');
-        $logger->info(get_class($this));
-        $logger->info('sql = ' . $sql);
-        $logger->info('Rows Affected = ' . $affectedRowsCount);
-        $logger->info('Execution Time = ' . $t);
-
-        if($insertId > 0)
-        {
-            $logger->info('Insert Id = ' . $insertId);
-        }
-
-        if($data != null)
-        {
-            $logger->info('data = ' . print_r($data, true));
-        }
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return array
-     */
-    protected function getColumnNames($data)
-    {
-        $colNames = array();
-
-        foreach($data as $key => $value)
-        {
-            $colNames[] = $key;
-        }
-
-        return $colNames;
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return array
-     */
-    protected function getBindParameterNames($data)
-    {
-        $bindParamNames = array();
-
-        foreach($data as $key => $value)
-        {
-            $bindParamNames[] = ':' . $key;
-        }
-
-        return $bindParamNames;
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return array
-     */
-    protected function convertToBindParamArray($data)
-    {
-        $bindParams = array();
-
-        foreach($data as $key => $value)
-        {
-            $bindParams[':' . $key] = $value;
-        }
-
-        return $bindParams;
+        return intval($rows[0]['val_count']);
     }
 }
