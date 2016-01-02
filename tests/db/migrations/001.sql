@@ -30,9 +30,9 @@ CREATE TABLE `example_entity_table` (
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name_idx` (`name`),
-  KEY `nullable_val_idx` (`nullable`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `nullable_val_idx` (`nullable`),
+  KEY `name_idx` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -61,4 +61,4 @@ CREATE TABLE `example_join_table` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-31 22:09:51
+-- Dump completed on 2016-01-01 13:06:28

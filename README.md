@@ -28,7 +28,6 @@ and run the `php composer.phar install` command to install it.
 There are four main classes are are used to represent all of the relationships
 within a database: 
 
-*   `AbstractEntity`
 *   `AbstractTableGateway`
 *   `AbstractJoinTableGateway`
 *   `PdoFactory`

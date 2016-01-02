@@ -20,7 +20,7 @@ class ExampleEntity
     {
         $this->_id = 0;
         $this->_name = "";
-        $this->_nullable = "";
+        $this->_nullable = null;
         $this->_numeral = 0;
         $this->_created = "";
         $this->_updated = "";
@@ -71,7 +71,7 @@ class ExampleEntity
      */
     public function setNullable($nullable)
     {
-        $this->_nullable = (string)$nullable;
+        $this->_nullable = $nullable;
     }
 
     /**

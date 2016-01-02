@@ -10,7 +10,7 @@ class ExampleEntityTests extends UnitTest
         $entity = new ExampleEntity();
         $this->assertEqual($entity->getId(),       0);
         $this->assertEqual($entity->getName(),     "");
-        $this->assertEqual($entity->getNullable(), "");
+        $this->assertEqual($entity->getNullable(), null);
         $this->assertEqual($entity->getNumeral(),  0);
         $this->assertEqual($entity->getCreated(),  "");
         $this->assertEqual($entity->getUpdated(),  "");

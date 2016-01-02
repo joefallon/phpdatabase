@@ -48,7 +48,7 @@ class ExampleEntityGateway extends AbstractTableGateway
      */
     public function update(ExampleEntity $entity)
     {
-        return 0;
+        return $this->baseUpdate($entity);
     }
 
     /**
@@ -58,7 +58,84 @@ class ExampleEntityGateway extends AbstractTableGateway
      */
     public function delete($id)
     {
-        return 0;
+        return $this->baseDelete($id);
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return array
+     */
+    public function retrieveByName($name)
+    {
+        return $this->baseRetrieveBy('name', $name);
+    }
+
+    /**
+     * @param array $ids
+     *
+     * @return array
+     */
+    public function retrieveByIds(array $ids)
+    {
+        return $this->baseRetrieveByIds($ids);
+    }
+
+    /**
+     * @return array
+     */
+    public function retrieveByIsNull()
+    {
+        return $this->baseRetrieveByIsNull('nullable');
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return array
+     */
+    public function retrieveByNameNotEqual($name)
+    {
+        return $this->baseRetrieveByNotEqual('name', $name);
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return int
+     */
+    public function setFieldNullableNull($value)
+    {
+        return $this->baseSetFieldNull('nullable', $value);
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return int
+     */
+    public function deleteNameBy($name)
+    {
+        return $this->baseDeleteBy('name', $name);
+    }
+
+
+    /**
+     * @param string $name
+     *
+     * @return mixed
+     */
+    public function countByName($name)
+    {
+        return $this->baseCountBy('name', $name);
+    }
+
+    public function truncateTable()
+    {
+        $pdo = $this->_pdo;
+        $pdo->exec('SET FOREIGN_KEY_CHECKS=0;');
+        $pdo->exec('TRUNCATE TABLE `example_entity_table`');
+        $pdo->exec('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**
@@ -99,4 +176,5 @@ class ExampleEntityGateway extends AbstractTableGateway
 
         return $object;
     }
+
 }
