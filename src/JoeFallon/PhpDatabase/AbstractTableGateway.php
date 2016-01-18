@@ -38,11 +38,11 @@ abstract class AbstractTableGateway
     abstract protected function mapObjectToArray($object);
 
     /**
-     * @param array $array
+     * @param array $arr
      *
      * @return mixed
      */
-    abstract protected function mapArrayToObject($array);
+    abstract protected function mapArrayToObject($arr);
 
     /**
      * @param string $val
@@ -61,9 +61,9 @@ abstract class AbstractTableGateway
     }
 
     /**
-     * @param mixed $entity
+     * @param $entity
      *
-     * @return string
+     * @return int
      */
     protected function baseCreate($entity)
     {
@@ -87,7 +87,7 @@ abstract class AbstractTableGateway
         $bindParameters = $this->bindParameterData($data);
         $statement->execute($bindParameters);
 
-        return $pdo->lastInsertId();
+        return (int)$pdo->lastInsertId();
     }
 
     /**

@@ -159,20 +159,20 @@ class ExampleEntityGateway extends AbstractTableGateway
     }
 
     /**
-     * @param array $array
+     * @param array $arr
      *
      * @return ExampleEntity
      */
-    protected function mapArrayToObject($array)
+    protected function mapArrayToObject($arr)
     {
         $object = new ExampleEntity();
 
-        $object->setId($array['id']);
-        $object->setName($array['name']);
-        $object->setNullable($array['nullable']);
-        $object->setNumeral($array['numeral']);
-        $object->setCreated($array['created']);
-        $object->setUpdated($array['updated']);
+        $object->setId($arr['id']);
+        $object->setName($arr['name']);
+        $object->setNullable($arr['nullable']);
+        $object->setNumeral($arr['numeral']);
+        $object->setCreated($arr['created']);
+        $object->setUpdated($arr['updated']);
 
         return $object;
     }

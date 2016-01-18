@@ -10,21 +10,21 @@
     "packages-dev": [
         {
             "name": "joefallon/kisstest",
-            "version": "v2.1.0",
+            "version": "v2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joefallon/kisstest.git",
-                "reference": "b259cee54bcf4582251dd827ce42b059f1be7c46"
+                "reference": "0e56d86f9f3ec27a0ed5a8cffaed1eca3ef4352b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joefallon/kisstest/zipball/b259cee54bcf4582251dd827ce42b059f1be7c46",
-                "reference": "b259cee54bcf4582251dd827ce42b059f1be7c46",
+                "url": "https://api.github.com/repos/joefallon/kisstest/zipball/0e56d86f9f3ec27a0ed5a8cffaed1eca3ef4352b",
+                "reference": "0e56d86f9f3ec27a0ed5a8cffaed1eca3ef4352b",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0",
-                "phpunit/php-code-coverage": "^2.0.0"
+                "phpunit/php-code-coverage": "^2.2.0"
             },
             "require-dev": {
                 "joefallon/phpautoloader": "^2.0.0"
@@ -53,7 +53,7 @@
                 "unit-test",
                 "xunit"
             ],
-            "time": "2016-01-01 05:42:18"
+            "time": "2016-01-10 05:07:36"
         },
         {
             "name": "joefallon/phpautoloader",
