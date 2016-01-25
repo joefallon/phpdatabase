@@ -35,14 +35,14 @@ abstract class AbstractTableGateway
      *
      * @return array
      */
-    abstract protected function mapObjectToArray($object);
+    abstract protected function mapEntityToArray($object);
 
     /**
      * @param array $arr
      *
      * @return mixed
      */
-    abstract protected function mapArrayToObject($arr);
+    abstract protected function mapArrayToEntity($arr);
 
     /**
      * @param string $val
@@ -71,7 +71,7 @@ abstract class AbstractTableGateway
         $table  = $this->_tableName;
         $pkName = $this->_primaryKeyName;
 
-        $data = $this->mapObjectToArray($entity);
+        $data = $this->mapEntityToArray($entity);
         $data = $this->timeStampCreatedColumn($data);
         $data = $this->timeStampUpdatedColumn($data);
         unset($data[$pkName]);
@@ -216,7 +216,7 @@ abstract class AbstractTableGateway
             return null;
         }
 
-        return $this->mapArrayToObject($row[0]);
+        return $this->mapArrayToEntity($row[0]);
     }
 
     /**
@@ -227,7 +227,7 @@ abstract class AbstractTableGateway
     protected function baseUpdate($entity)
     {
         $pdo    = $this->_pdo;
-        $data   = $this->mapObjectToArray($entity);
+        $data   = $this->mapEntityToArray($entity);
         $data   = $this->timeStampUpdatedColumn($data);
         $table  = $this->_tableName;
         $pkName = $this->_primaryKeyName;
@@ -309,7 +309,7 @@ abstract class AbstractTableGateway
 
         while($row = $statement->fetch(PDO::FETCH_ASSOC))
         {
-            $results[] = $this->mapArrayToObject($row);
+            $results[] = $this->mapArrayToEntity($row);
         }
 
         return $results;
@@ -335,7 +335,7 @@ abstract class AbstractTableGateway
 
         while($row = $statement->fetch(PDO::FETCH_ASSOC))
         {
-            $results[] = $this->mapArrayToObject($row);
+            $results[] = $this->mapArrayToEntity($row);
         }
 
         return $results;
@@ -360,7 +360,7 @@ abstract class AbstractTableGateway
 
         while($row = $statement->fetch(PDO::FETCH_ASSOC))
         {
-            $results[] = $this->mapArrayToObject($row);
+            $results[] = $this->mapArrayToEntity($row);
         }
 
         return $results;
@@ -389,7 +389,7 @@ abstract class AbstractTableGateway
 
         while($row = $statement->fetch(PDO::FETCH_ASSOC))
         {
-            $results[] = $this->mapArrayToObject($row);
+            $results[] = $this->mapArrayToEntity($row);
         }
 
         return $results;

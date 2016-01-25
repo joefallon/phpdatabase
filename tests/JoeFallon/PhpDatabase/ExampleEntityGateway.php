@@ -143,7 +143,7 @@ class ExampleEntityGateway extends AbstractTableGateway
      *
      * @return array
      */
-    protected function mapObjectToArray($object)
+    protected function mapEntityToArray($object)
     {
         /** @var ExampleEntity $object */
         $result = [
@@ -163,7 +163,7 @@ class ExampleEntityGateway extends AbstractTableGateway
      *
      * @return ExampleEntity
      */
-    protected function mapArrayToObject($arr)
+    protected function mapArrayToEntity($arr)
     {
         $object = new ExampleEntity();
 
