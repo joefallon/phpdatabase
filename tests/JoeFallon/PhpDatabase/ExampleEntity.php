@@ -39,7 +39,7 @@ class ExampleEntity
      */
     public function setId($id)
     {
-        $this->_id = $id;
+        $this->_id = (int)$id;
     }
 
     /**

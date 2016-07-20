@@ -1,6 +1,5 @@
 <?php
 use JoeFallon\AutoLoader;
-use JoeFallon\KissTest\UnitTest;
 use JoeFallon\PhpDatabase\PdoFactory;
 
 // Define the include paths.
@@ -25,7 +24,4 @@ $pdo->exec('TRUNCATE TABLE `example_entity_table`');
 $pdo->exec('TRUNCATE TABLE `example_join_table`');
 $pdo->exec('SET FOREIGN_KEY_CHECKS=1;');
 
-UnitTest::setCodeCoverageOutputDirectory('../cov');
-UnitTest::addDirectoryToCoverageBlacklist('../tests');
-UnitTest::addDirectoryToCoverageBlacklist('../vendor');
 
